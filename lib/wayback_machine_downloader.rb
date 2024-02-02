@@ -14,7 +14,7 @@ class WaybackMachineDownloader
 
   include ArchiveAPI
 
-  VERSION = "2.3.1"
+  VERSION = "2.3.2"
 
   attr_accessor :base_url, :exact_url, :directory, :all_timestamps,
     :from_timestamp, :to_timestamp, :only_filter, :exclude_filter, 
@@ -289,6 +289,8 @@ class WaybackMachineDownloader
           puts "#{file_path} was empty and was removed."
         end
       end
+      # Add a 3-second sleep after the download and before the semaphore logic
+      sleep(3)
       semaphore.synchronize do
         @processed_file_count += 1
         puts "#{file_url} -> #{file_path} (#{@processed_file_count}/#{file_list_by_timestamp.size})"
